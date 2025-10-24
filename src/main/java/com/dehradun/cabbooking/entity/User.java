@@ -1,6 +1,7 @@
 package com.dehradun.cabbooking.entity;
 
 import com.dehradun.cabbooking.enums.UserStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,6 +54,7 @@ public class User {
     private OffsetDateTime updatedAt;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference // prevents recursion
     private List<Ride> rides = new ArrayList<>();
 
     /**

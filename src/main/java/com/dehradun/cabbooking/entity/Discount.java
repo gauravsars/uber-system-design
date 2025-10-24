@@ -1,5 +1,6 @@
 package com.dehradun.cabbooking.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,6 +47,7 @@ public class Discount {
     private LocalDateTime createdAt;
 
     @ManyToMany(mappedBy = "discounts")
+    @JsonBackReference("ride-discount")
     private List<Ride> rides = new ArrayList<>();
 
     /**

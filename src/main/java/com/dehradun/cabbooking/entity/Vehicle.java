@@ -1,6 +1,9 @@
 package com.dehradun.cabbooking.entity;
 
 import com.dehradun.cabbooking.enums.VehicleType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,6 +30,7 @@ public class Vehicle {
 
     @OneToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "driver_id")
+    @JsonBackReference("ride-vehicle")
     private Driver driver;
 
     @Column(name = "vehicle_number", nullable = false, length = 20, unique = true)

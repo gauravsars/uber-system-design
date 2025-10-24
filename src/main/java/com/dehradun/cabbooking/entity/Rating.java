@@ -1,6 +1,8 @@
 package com.dehradun.cabbooking.entity;
 
 import com.dehradun.cabbooking.enums.RatingActor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -27,6 +29,7 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(name = "ride_id", nullable = false)
+    @JsonBackReference("ride-ratings")
     private Ride ride;
 
     @Enumerated(EnumType.STRING)
@@ -59,21 +62,21 @@ public class Rating {
     }
 
     /**
-     * Sets the unique identifier for the rating.
-     *
-     * @param ratingId rating primary key
-     */
-    public void setRatingId(Integer ratingId) {
-        this.ratingId = ratingId;
-    }
-
-    /**
      * Retrieves the ride to which the rating applies.
      *
      * @return ride entity rated by the user or driver
      */
     public Ride getRide() {
         return ride;
+    }
+
+    /**
+     * Sets the unique identifier for the rating.
+     *
+     * @param ratingId rating primary key
+     */
+    public void setRatingId(Integer ratingId) {
+        this.ratingId = ratingId;
     }
 
     /**
