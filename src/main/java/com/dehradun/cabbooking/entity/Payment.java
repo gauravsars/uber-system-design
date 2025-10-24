@@ -2,6 +2,7 @@ package com.dehradun.cabbooking.entity;
 
 import com.dehradun.cabbooking.enums.PaymentMethod;
 import com.dehradun.cabbooking.enums.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -29,6 +30,7 @@ public class Payment {
 
     @OneToOne
     @JoinColumn(name = "ride_id", unique = true)
+    @JsonBackReference("ride-payment")
     private Ride ride;
 
     @Column(name = "amount", precision = 10, scale = 2, nullable = false)

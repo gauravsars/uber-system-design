@@ -1,6 +1,7 @@
 package com.dehradun.cabbooking.entity;
 
 import com.dehradun.cabbooking.enums.DriverStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -54,9 +55,11 @@ public class Driver {
     private LocalDateTime createdAt;
 
     @OneToOne(mappedBy = "driver")
+    @JsonBackReference("ride-vehicle")
     private Vehicle vehicle;
 
     @OneToMany(mappedBy = "driver")
+    @JsonBackReference("ride-driver")
     private List<Ride> rides = new ArrayList<>();
 
     /**

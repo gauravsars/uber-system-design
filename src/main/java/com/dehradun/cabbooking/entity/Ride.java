@@ -1,6 +1,8 @@
 package com.dehradun.cabbooking.entity;
 
 import com.dehradun.cabbooking.enums.RideStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +17,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,22 +38,28 @@ public class Ride {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "driver_id")
+    @JsonManagedReference("ride-driver")
     private Driver driver;
+
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
+    @JsonManagedReference("ride-vehicle")
     private Vehicle vehicle;
 
     @ManyToOne
     @JoinColumn(name = "pickup_location_id")
+    @JsonIgnore
     private Location pickupLocation;
 
     @ManyToOne
     @JoinColumn(name = "drop_location_id")
+    @JsonIgnore
     private Location dropLocation;
 
     @Enumerated(EnumType.STRING)
@@ -68,22 +78,28 @@ public class Ride {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
 
     @ManyToMany
     @JoinTable(name = "ride_discounts",
         joinColumns = @JoinColumn(name = "ride_id"),
         inverseJoinColumns = @JoinColumn(name = "discount_id"))
+    @JsonManagedReference("ride-discount")
     private List<Discount> discounts = new ArrayList<>();
 
     @OneToMany(mappedBy = "ride")
+    @JsonManagedReference("ride-ratings")
     private List<Rating> ratings = new ArrayList<>();
 
     @OneToOne(mappedBy = "ride")
+    @JsonManagedReference("ride-payment")
     private Payment payment;
 
     /**

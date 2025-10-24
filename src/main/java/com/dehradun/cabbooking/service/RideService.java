@@ -137,7 +137,8 @@ public class RideService {
         LocalDate targetDate = date != null ? date : LocalDate.now();
         LocalDateTime start = targetDate.atStartOfDay();
         LocalDateTime end = targetDate.atTime(LocalTime.MAX);
-        return rideRepository.findByDeletedFalseAndCreatedAtBetween(start, end);
+        List<Ride> rides = rideRepository.findByDeletedFalseAndCreatedAtBetween(start, end);
+        return rides;
     }
 
     /**
